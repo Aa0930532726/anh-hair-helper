@@ -1,0 +1,89 @@
+<body style="font-family: Microsoft JhengHei, sans-serif; background:#111; color:#fff; padding:24px;">
+
+<h1 style="text-align:center;">ANH 髮型建議小幫手</h1>
+<p style="text-align:center; opacity:.8;">回答幾個問題，我們幫你找最適合的剪・燙・染</p>
+
+<div style="max-width:420px;margin:30px auto;display:flex;flex-direction:column;gap:12px;">
+
+<label>你的膚色
+<select id="skin">
+  <option value="">請選擇</option>
+  <option>偏白</option>
+  <option>自然</option>
+  <option>偏深</option>
+</select>
+</label>
+
+<label>目前髮況
+<select id="hairState">
+  <option value="">請選擇</option>
+  <option>健康</option>
+  <option>乾燥</option>
+  <option>受損</option>
+</select>
+</label>
+
+<label>目前長度
+<select id="length">
+  <option value="">請選擇</option>
+  <option>短髮</option>
+  <option>中長髮</option>
+  <option>長髮</option>
+</select>
+</label>
+
+<label>是否漂過
+<select id="bleach">
+  <option value="">請選擇</option>
+  <option>沒有</option>
+  <option>有</option>
+</select>
+</label>
+
+<label>臉型
+<select id="face">
+  <option value="">請選擇</option>
+  <option>圓臉</option>
+  <option>方臉</option>
+  <option>長臉</option>
+  <option>鵝蛋臉</option>
+</select>
+</label>
+
+<label>想要的感覺
+<select id="style">
+  <option value="">請選擇</option>
+  <option>自然好整理</option>
+  <option>顯白</option>
+  <option>有個性</option>
+  <option>氣質溫柔</option>
+</select>
+</label>
+
+<button onclick="analyze()" style="margin-top:12px;padding:14px;border:none;border-radius:8px;background:#ffb703;font-size:16px;">
+查看建議
+</button>
+
+<div id="result" style="margin-top:20px;line-height:1.8;"></div>
+</div>
+
+<script>
+function analyze(){
+  const skin = skin.value;
+  const face = face.value;
+  const bleach = bleach.value;
+  const style = document.getElementById("style").value;
+
+  if(!skin || !face || !style){
+    result.innerHTML = "⚠️ 請先把問題選完，我們才能給準確建議唷";
+    return;
+  }
+
+  let color = "";
+  if(skin==="偏白") color="冷棕、霧灰、藍黑";
+  if(skin==="自然") color="奶茶棕、巧克力棕";
+  if(skin==="偏深") color="暖棕、焦糖、玫瑰棕";
+
+  let perm = "";
+  if(face==="圓臉") perm="中大捲、避免太貼頭皮";
+  if(face==="方臉") perm="柔和S捲、修飾
