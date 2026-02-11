@@ -1,89 +1,362 @@
-<body style="font-family: Microsoft JhengHei, sans-serif; background:#111; color:#fff; padding:24px;">
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>ANH 髮型建議小幫手</title>
+  <style>
+    :root{
+      --bg:#0b0f1a;
+      --card:#111827;
+      --card2:#0f172a;
+      --text:#e5e7eb;
+      --muted:#9ca3af;
+      --brand:#fbbf24; /* 黃 */
+      --line:#22c55e;
+      --danger:#ef4444;
+      --border:rgba(255,255,255,.08);
+      --shadow:0 18px 60px rgba(0,0,0,.35);
+      --radius:18px;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: "Microsoft JhengHei","PingFang TC",system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+      color:var(--text);
+      background: radial-gradient(1200px 600px at 20% 10%, rgba(251,191,36,.12), transparent 55%),
+                  radial-gradient(900px 500px at 80% 30%, rgba(34,197,94,.10), transparent 55%),
+                  linear-gradient(180deg, #070a12, #0b0f1a);
+      min-height:100vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:18px;
+    }
+    .wrap{width:min(980px, 100%);}
+    .top{
+      display:flex; gap:14px; align-items:flex-start; justify-content:space-between; flex-wrap:wrap;
+      margin-bottom:14px;
+    }
+    .title{
+      padding:18px 18px 10px;
+    }
+    h1{
+      margin:0 0 8px;
+      letter-spacing:.5px;
+      font-size:clamp(22px, 3.2vw, 34px);
+    }
+    .sub{
+      margin:0;
+      color:var(--muted);
+      line-height:1.6;
+      font-size:15px;
+    }
+    .badge{
+      display:inline-flex; gap:8px; align-items:center;
+      padding:10px 12px;
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.04);
+      border-radius:999px;
+      box-shadow: var(--shadow);
+    }
+    .badge b{color:var(--brand)}
+    .grid{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap:14px;
+    }
+    @media (min-width: 880px){
+      .grid{grid-template-columns: 420px 1fr;}
+    }
+    .card{
+      border:1px solid var(--border);
+      background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+    }
+    .card .hd{
+      padding:16px 16px 12px;
+      background: linear-gradient(90deg, rgba(251,191,36,.12), rgba(34,197,94,.10));
+      border-bottom:1px solid var(--border);
+    }
+    .card .hd h2{
+      margin:0;
+      font-size:18px;
+      letter-spacing:.3px;
+    }
+    .card .bd{padding:16px;}
+    .row{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap:10px;
+      margin-bottom:12px;
+    }
+    .field{
+      border:1px solid var(--border);
+      border-radius: 14px;
+      padding:10px 12px;
+      background: rgba(0,0,0,.18);
+    }
+    .field label{
+      display:block;
+      color: var(--muted);
+      font-size:13px;
+      margin-bottom:6px;
+    }
+    select{
+      width:100%;
+      padding:10px 10px;
+      border-radius:12px;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(17,24,39,.75);
+      color: var(--text);
+      outline:none;
+      font-size:15px;
+    }
+    .btn{
+      width:100%;
+      padding:14px 14px;
+      border-radius: 14px;
+      border:0;
+      cursor:pointer;
+      font-weight:800;
+      font-size:16px;
+      letter-spacing:.6px;
+      background: linear-gradient(90deg, var(--brand), #f59e0b);
+      color:#111827;
+      box-shadow: 0 12px 35px rgba(245,158,11,.25);
+      transition: transform .08s ease, filter .2s ease;
+    }
+    .btn:hover{filter:brightness(1.02)}
+    .btn:active{transform: translateY(1px)}
+    .lineBtn{
+      display:flex; align-items:center; justify-content:center; gap:10px;
+      margin-top:10px;
+      width:100%;
+      padding:12px 14px;
+      border-radius: 14px;
+      border:1px solid rgba(34,197,94,.25);
+      background: rgba(34,197,94,.12);
+      color: var(--text);
+      text-decoration:none;
+      font-weight:700;
+    }
+    .lineDot{
+      width:10px;height:10px;border-radius:50%;
+      background: var(--line);
+      box-shadow: 0 0 0 6px rgba(34,197,94,.15);
+    }
 
-<h1 style="text-align:center;">ANH 髮型建議小幫手</h1>
-<p style="text-align:center; opacity:.8;">回答幾個問題，我們幫你找最適合的剪・燙・染</p>
+    .out{
+      background: linear-gradient(180deg, rgba(255,255,255,.03), rgba(0,0,0,.10));
+      border:1px solid var(--border);
+      border-radius: var(--radius);
+      padding:16px;
+      min-height: 360px;
+    }
+    .out h3{
+      margin:0 0 10px;
+      font-size:18px;
+      color: #fff;
+    }
+    .section{
+      margin-top:12px;
+      padding:12px;
+      border-radius: 14px;
+      background: rgba(0,0,0,.22);
+      border:1px solid rgba(255,255,255,.06);
+    }
+    .section h4{
+      margin:0 0 8px;
+      font-size:14px;
+      letter-spacing:.4px;
+      color: #fef3c7;
+    }
+    ul{margin:0; padding-left:18px; color:var(--text); line-height:1.75}
+    .muted{color:var(--muted)}
+    .warn{
+      margin-top:12px;
+      padding:12px;
+      border-radius:14px;
+      border:1px solid rgba(239,68,68,.25);
+      background: rgba(239,68,68,.10);
+      color:#fee2e2;
+      line-height:1.7;
+    }
+    .pill{
+      display:inline-block;
+      padding:6px 10px;
+      border-radius:999px;
+      background: rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.08);
+      color: var(--muted);
+      font-size:12px;
+      margin-right:6px;
+      margin-bottom:6px;
+    }
+    .copy{
+      margin-top:10px;
+      padding:10px 12px;
+      border-radius:14px;
+      border:1px solid rgba(255,255,255,.08);
+      background: rgba(255,255,255,.04);
+      color: var(--text);
+      cursor:pointer;
+      font-weight:700;
+      width:100%;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="top">
+      <div class="title">
+        <h1>ANH 髮型建議小幫手</h1>
+        <p class="sub">回答幾個問題，我們幫你整理「剪 / 燙 / 染」最適合的方向（偏實戰，不講玄的）。</p>
+      </div>
+      <div class="badge">
+        <span class="muted">店家：</span><b>ANH</b>
+        <span class="muted">｜一鍵產出建議</span>
+      </div>
+    </div>
 
-<div style="max-width:420px;margin:30px auto;display:flex;flex-direction:column;gap:12px;">
+    <div class="grid">
+      <!-- 左：表單 -->
+      <div class="card">
+        <div class="hd"><h2>快速選擇</h2></div>
+        <div class="bd">
+          <div class="row">
+            <div class="field">
+              <label>你的膚色</label>
+              <select id="skin">
+                <option value="fair">偏白（冷白 / 粉白 / 易泛紅）</option>
+                <option value="neutral">自然（黃白之間 / 大多數亞洲膚）</option>
+                <option value="tan">健康 / 小麥 / 偏黑</option>
+              </select>
+            </div>
 
-<label>你的膚色
-<select id="skin">
-  <option value="">請選擇</option>
-  <option>偏白</option>
-  <option>自然</option>
-  <option>偏深</option>
-</select>
-</label>
+            <div class="field">
+              <label>目前髮況</label>
+              <select id="hairCond">
+                <option value="healthy">健康（彈性OK / 不卡手）</option>
+                <option value="dry">乾燥（毛躁 / 打結）</option>
+                <option value="damaged">受損（斷裂 / 彈性差 / 易糊）</option>
+              </select>
+            </div>
 
-<label>目前髮況
-<select id="hairState">
-  <option value="">請選擇</option>
-  <option>健康</option>
-  <option>乾燥</option>
-  <option>受損</option>
-</select>
-</label>
+            <div class="field">
+              <label>目前長度</label>
+              <select id="length">
+                <option value="short">短髮（耳下～下巴）</option>
+                <option value="medium">中長（鎖骨附近）</option>
+                <option value="long">長髮（胸上～更長）</option>
+              </select>
+            </div>
 
-<label>目前長度
-<select id="length">
-  <option value="">請選擇</option>
-  <option>短髮</option>
-  <option>中長髮</option>
-  <option>長髮</option>
-</select>
-</label>
+            <div class="field">
+              <label>是否漂過</label>
+              <select id="bleached">
+                <option value="no">沒有</option>
+                <option value="yes">有（漂過 / 曾漂退）</option>
+              </select>
+            </div>
 
-<label>是否漂過
-<select id="bleach">
-  <option value="">請選擇</option>
-  <option>沒有</option>
-  <option>有</option>
-</select>
-</label>
+            <div class="field">
+              <label>臉型</label>
+              <select id="face">
+                <option value="oval">鵝蛋臉</option>
+                <option value="round">圓臉</option>
+                <option value="square">方臉</option>
+                <option value="long">長臉</option>
+                <option value="heart">心形臉（上寬下尖）</option>
+              </select>
+            </div>
 
-<label>臉型
-<select id="face">
-  <option value="">請選擇</option>
-  <option>圓臉</option>
-  <option>方臉</option>
-  <option>長臉</option>
-  <option>鵝蛋臉</option>
-</select>
-</label>
+            <div class="field">
+              <label>想要的感覺</label>
+              <select id="vibe">
+                <option value="easy">自然好整理（通勤/不想花時間）</option>
+                <option value="soft">溫柔顯氣質（柔、仙、韓系）</option>
+                <option value="cool">酷帥有個性（線條、乾淨俐落）</option>
+                <option value="fashion">時髦高級感（霧感/層次/氛圍）</option>
+                <option value="volume">想要蓬鬆（扁塌救星）</option>
+              </select>
+            </div>
+          </div>
 
-<label>想要的感覺
-<select id="style">
-  <option value="">請選擇</option>
-  <option>自然好整理</option>
-  <option>顯白</option>
-  <option>有個性</option>
-  <option>氣質溫柔</option>
-</select>
-</label>
+          <button class="btn" id="go">查看建議</button>
 
-<button onclick="analyze()" style="margin-top:12px;padding:14px;border:none;border-radius:8px;background:#ffb703;font-size:16px;">
-查看建議
-</button>
+          <a class="lineBtn" href="https://lin.ee/qzY4RIL" target="_blank" rel="noopener">
+            <span class="lineDot"></span>
+            加入官方 LINE（預約/詢問）
+          </a>
 
-<div id="result" style="margin-top:20px;line-height:1.8;"></div>
-</div>
+          <button class="copy" id="copyBtn">一鍵複製建議（貼給客人）</button>
+          <p class="muted" style="margin:10px 0 0; font-size:12px;">
+            小提醒：此工具是方向建議，最後仍以設計師現場判斷髮況與髮流為準。
+          </p>
+        </div>
+      </div>
+
+      <!-- 右：結果 -->
+      <div class="card">
+        <div class="hd"><h2>建議結果</h2></div>
+        <div class="bd">
+          <div class="out" id="out">
+            <h3>請先選好條件 → 按「查看建議」</h3>
+            <div class="section">
+              <h4>會輸出什麼？</h4>
+              <ul>
+                <li>染髮：適合色系、避雷色、明度/霧感方向</li>
+                <li>剪髮：臉型修飾重點、瀏海與層次建議</li>
+                <li>燙髮：捲度大小、捲落點、髮況限制</li>
+                <li>維護：回家怎麼整理、多久補染/修剪</li>
+              </ul>
+            </div>
+            <div class="warn">
+              若「有漂過 + 受損」：通常先修護，不急著燙；染色也會建議降明度、避開太冷太灰。
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
 <script>
-function analyze(){
-  const skin = skin.value;
-  const face = face.value;
-  const bleach = bleach.value;
-  const style = document.getElementById("style").value;
+(function(){
+  const $ = (id)=>document.getElementById(id);
 
-  if(!skin || !face || !style){
-    result.innerHTML = "⚠️ 請先把問題選完，我們才能給準確建議唷";
-    return;
-  }
-
-  let color = "";
-  if(skin==="偏白") color="冷棕、霧灰、藍黑";
-  if(skin==="自然") color="奶茶棕、巧克力棕";
-  if(skin==="偏深") color="暖棕、焦糖、玫瑰棕";
-
-  let perm = "";
-  if(face==="圓臉") perm="中大捲、避免太貼頭皮";
-  if(face==="方臉") perm="柔和S捲、修飾
+  const skinMap = {
+    fair: {
+      title: "偏白膚色",
+      dyeBest: [
+        "冷茶色：灰茶 / 藍灰茶（乾淨顯白）",
+        "霧感冷調：霧灰、霧藍、霧紫（高級感）",
+        "藍黑 / 藍紫黑（顯白、髮質看起來更好）",
+        "冷粉棕 / 粉棕（想溫柔但不顯黃）"
+      ],
+      dyeAvoid: [
+        "橘棕 / 銅色（容易顯黃、顯老）",
+        "過暖金色（若臉易泛紅更不建議）"
+      ],
+      rule: "若臉容易泛紅：優先選冷調（灰茶/藍黑/冷棕），避免橘紅銅。"
+    },
+    neutral: {
+      title: "自然膚色",
+      dyeBest: [
+        "奶茶棕 / 可可棕（最安全耐看）",
+        "亞麻棕（想亮一點但不浮誇）",
+        "黑茶色 / 深霧棕（上班族、顯髮質）",
+        "微暖巧克力（氣色更有精神）"
+      ],
+      dyeAvoid: [
+        "太銀太灰（臉容易顯暗、顯疲態）",
+        "太亮金（對比過強會顯土）"
+      ],
+      rule: "自然膚色可冷可暖，但要看你想走：顯白（冷）還是顯氣色（暖）。"
+    },
+    tan: {
+      title: "健康/偏黑膚色",
+      dyeBest: [
+        "巧克力 /
